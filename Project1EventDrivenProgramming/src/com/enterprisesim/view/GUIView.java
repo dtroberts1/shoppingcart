@@ -159,9 +159,7 @@ public class GUIView implements Updater{
 			else if (model.isProcessed == false) {
 				confirmBtn.setEnabled(false);
 				model.isProcessed = true;
-				processBtn.setEnabled(true);
-
-
+				
 				BookData currentBookData = this.myInventory.isInInventory(this.getBookIDTxt(), this.currentItemNbr, true);
 				// If Book ID Matches
 				if (currentBookData != null)
@@ -180,6 +178,7 @@ public class GUIView implements Updater{
 						// Enable the other buttons
 						viewOrderBtn.setEnabled(true);
 						finishOrderBtn.setEnabled(true);
+						processBtn.setEnabled(false);
 					}
 					
 					if (this.order == null)
