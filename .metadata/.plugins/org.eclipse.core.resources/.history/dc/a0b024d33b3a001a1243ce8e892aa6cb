@@ -1,0 +1,118 @@
+package com.enterprisesim.model;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import com.enterprisesim.model.BookData; 
+import com.enterprisesim.view.GUIView.TransactionItem;
+
+public class Order{
+	int size;
+	int nbrOrderItems;
+	double orderSubtotal;
+	final double taxRate = .06;
+	double orderTotal;
+
+	
+	String transactionDate;
+	TransactionItem allTransactions[];
+	//private ArrayList<BookData> allBooks;
+	public Order(int nbrOrderItems) {
+		this.size = 0;
+		this.orderSubtotal = 0.00;
+		this.allTransactions = new TransactionItem[nbrOrderItems];
+	}
+	
+	double getOrderSubtotal() {
+		return this.orderSubtotal;
+	}
+	public TransactionItem[] getTransactions() {
+		return this.allTransactions;
+	}
+
+	public void addItem(BookData bookData, int quantity) {
+		int itemIndex = this.size++;
+		this.allTransactions[itemIndex] = new TransactionItem();
+		this.allTransactions[itemIndex].bookID = bookData.bookID;
+		this.allTransactions[itemIndex].bookTitleAndAuth = bookData.bookTitleAndAuth;
+		this.allTransactions[itemIndex].bookPrice = bookData.bookPrice;
+		this.allTransactions[itemIndex].qty = quantity;
+		this.allTransactions[itemIndex].discountPercent = MyModel.getDiscount(quantity);
+		//this.allTransactions[itemIndex].info = bookTitleAndAuth;
+		this.allTransactions[itemIndex].subTotal = (quantity * bookData.bookPrice) - ((quantity * bookData.bookPrice) * (this.allTransactions[itemIndex].discountPercent / 100));
+		this.orderSubtotal += this.allTransactions[itemIndex].subTotal;////////////////////////////////;fill this out/////////////////////////
+	}
+	public void displayFinalPrompt() {
+    	DateFormat myDate = new SimpleDateFormat("M/DD/yyyy");
+    	DateFormat myTime = new SimpleDateFormat("hh:mm:ss aa");
+    	String myDateStr = myDate.format(new Date()).toString();
+    	String myTimeStr = myTime.format(new Date()).toString();
+
+		String outMessage = "";
+		outMessage += "Date: " + myDateStr + ", " + myTimeStr + " EST" + "\n\n";
+		outMessage += "Number of line items:" + this.size + "\n\n";
+		outMessage += "Item# / ID / Title / Price / Qty / Disc % / Subtotal:" + "\n\n";
+		
+		for (int i = 0; i < this.size; i++) {
+    		outMessage += (i + 1) + ". ";
+    		outMessage += this.allTransactions[i].bookID + " ";
+    		outMessage += this.allTransactions[i].bookTitleAndAuth + " ";
+    		outMessage += "$" + String.format("%.2f", this.allTransactions[i].bookPrice) + " ";
+    		outMessage += this.allTransactions[i].qty + " ";
+    		outMessage += (int)(this.allTransactions[i].discountPercent) + "% ";
+    		outMessage += "$" + String.format("%.2f", this.allTransactions[i].subTotal);
+    		outMessage += "\n";
+		}
+		outMessage += "\n";
+		outMessage += "Order subtotal: " + "$" + String.format("%.2f", this.orderSubtotal) + "\n\n";
+		outMessage += "Tax rate: " + (int)(this.taxRate * 100) + "%" + "\n\n";
+		outMessage += "Tax amount: " + "$" + String.format("%.2f", this.orderSubtotal * this.taxRate) + "\n\n";
+		outMessage += "Order total: " + "$" + String.format("%.2f", this.orderSubtotal + (this.taxRate * this.orderSubtotal)) + "\n\n";
+		outMessage += "Thanks for shopping at the Ye Olde Book Shoppe!";
+
+		
+		javax.swing.JOptionPane.showMessageDialog(null, outMessage);
+	}
+	public void printoutOrder() {
+		File outFile = new File("src/resources/transactions.txt");
+		FileWriter fileWriter;
+		try {
+			outFile.createNewFile();
+			fileWriter = new FileWriter(outFile, true);
+			String outStr = "";
+			for (int i = 0; i < this.size; i++) {
+				String []myDate = new String[3];
+				myDate = java.time.LocalDate.now().toString().split("-");
+				
+		    	DateFormat myOtherDate = new SimpleDateFormat("M/DD/yyyy");
+		    	DateFormat myOtherTime = new SimpleDateFormat("hh:mm:ss aa");
+		    	DateFormat onlyTime = new SimpleDateFormat("HHmm");
+
+		    	String myOtherDateStr = myOtherDate.format(new Date()).toString();
+		    	String myOtherTimeStr = myOtherTime.format(new Date()).toString();
+		    	String onlyMilitaryTimeStr = onlyTime.format(new Date()).toString();
+				
+				outStr += myDate[2] + myDate[1]+ myDate[0] + onlyMilitaryTimeStr + ", "; // Date of Transaction
+				outStr += this.allTransactions[i].bookID + ", ";
+				outStr += this.allTransactions[i].bookTitleAndAuth + ", ";
+				outStr += String.format("%.2f", this.allTransactions[i].bookPrice) + ", ";
+				outStr += this.allTransactions[i].qty + ", ";
+				outStr += (this.allTransactions[i].discountPercent / 100) + ", ";
+				outStr += "$" + String.format("%.2f", this.allTransactions[i].subTotal) + ", ";
+				outStr += myOtherDateStr + ", " + myOtherTimeStr + " EST" + "\n";
+			}	
+			fileWriter.write(outStr);
+			fileWriter.close();
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+
+	}
+}

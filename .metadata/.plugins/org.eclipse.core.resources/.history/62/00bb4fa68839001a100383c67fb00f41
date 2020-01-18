@@ -1,0 +1,50 @@
+package com.enterprisesim.Listeners;
+
+import java.awt.event.ActionEvent;  
+import java.awt.event.ActionListener;
+import javax.swing.JButton;
+
+
+import com.enterprisesim.model.MyModel;
+import com.enterprisesim.model.Order;
+import com.enterprisesim.view.GUIView;
+
+public class MyListeners implements ActionListener {
+
+	GUIView guiView; //= new MainGUI();
+	Order myOrder;
+	
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		String conditionString = e.getActionCommand().replaceAll("\\d", "");
+		//System.out.printf("source is %s", conditionString);
+		
+		
+        int text = ((JButton) e.getSource()).getSelectedObjects().length;
+        System.out.print(text);
+		/*
+		if(conditionString.equals("Confirm Item #"))
+		{
+			//((Component) e.getSource()).setVisible(false);
+			
+			guiView.update(myOrder);
+		}	
+		else if(conditionString.equals("Process Item #"))
+		{
+			//((Component) e.getSource()).setVisible(false);
+			
+			guiView.update(myOrder);
+		}	
+		else if(conditionString.equals("New Order"))
+		{
+			//((Component) e.getSource()).setVisible(false);
+			
+			GUIView.reset();
+		}	
+		*/
+	}
+
+	
+
+}

@@ -1,0 +1,62 @@
+package com.enterprisesim.Listeners;
+
+import java.awt.event.ActionEvent;  
+import java.awt.event.ActionListener;
+import javax.swing.JButton;
+import com.enterprisesim.view.ButtonWithExtras;
+
+import com.enterprisesim.model.Order;
+import com.enterprisesim.view.GUIView;
+
+public class MyListeners implements ActionListener {
+
+	GUIView guiView; //= new MainGUI();
+	Order myOrder;
+	
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		String conditionString = e.getActionCommand().replaceAll("\\d", "");
+		//System.out.printf("source is %s", conditionString);
+		
+		
+//		System.out.print(((JButton)e.getSource()).getClass().toString());
+		if (e.getSource() instanceof ButtonWithExtras) {
+			ButtonWithExtras myButton;
+			GUIView guiView = ((ButtonWithExtras)e.getSource()).getButtonParent();
+			if (guiView == null) {
+				System.out.print("guiView is null");;
+			}else {
+				System.out.print("guiview is not null");;
+			}
+			System.out.print("Type is correct. view is " + guiView.toString());
+
+		//	System.out.print("Button class is " + myButton);
+		}else {
+			System.out.print("Type is incorrect");
+		}
+		/*
+		if(conditionString.equals("Confirm Item #"))
+		{
+			//((Component) e.getSource()).setVisible(false);
+			
+			guiView.update(myOrder);
+		}	
+		else if(conditionString.equals("Process Item #"))
+		{
+			//((Component) e.getSource()).setVisible(false);
+			
+			guiView.update(myOrder);
+		}	
+		else if(conditionString.equals("New Order"))
+		{
+			//((Component) e.getSource()).setVisible(false);
+			
+			GUIView.reset();
+		}	
+		*/
+	}
+
+	
+
+}

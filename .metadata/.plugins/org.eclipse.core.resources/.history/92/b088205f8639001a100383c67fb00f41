@@ -1,0 +1,7 @@
+package com.enterprisesim.model;
+
+public interface Updater {
+	public default void update(Order order) {
+		
+	}
+}

@@ -1,0 +1,66 @@
+import java.io.BufferedReader; 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Scanner;
+import com.enterprisesim.model.Inventory;
+
+import com.enterprisesim.view.GUIView;
+
+public class Application {
+	
+	public static class BookData{
+		public String bookID;
+		public String bookTitleAndAuth;
+		public String bookPrice;
+	}
+
+
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		 File file = new File("src/resources/inventory.txt");
+		 String allInventoryData = "";
+		 int nbrLines = 0;
+		 int []myIDArray = new int[32];
+		 
+		 try (Scanner scanner = new Scanner(file)){
+			 int i = 0;
+			   while ((scanner.hasNextInt()) || (scanner.hasNext())) {
+				//   if (scanner.nextLine()())
+				   try {
+					   myIDArray[i] += scanner.nextInt();
+				   } catch (Exception e) {
+					   e.printStackTrace();
+				   }
+
+				   allInventoryData += scanner.nextLine();
+				//   else if(scanner.hasNext())
+				//	   allInventoryData += scanner.next();
+				   nbrLines++;
+			   }
+			  System.out.print("Number of lines is " + nbrLines);
+			  Inventory myInventory = new Inventory(nbrLines);
+			  System.out.print("allInventoryData is " + allInventoryData);
+			  myInventory.setInventory(allInventoryData);
+			  System.out.print("in constructor, inventory is " +myInventory.getAllBooks()[0].bookID);
+
+			  GUIView myGui = new GUIView(myInventory);
+
+		 }
+			 catch (FileNotFoundException e) {
+				 System.out.println("can't find file " + file.toString());
+			 }
+			 catch (IOException e) {
+				 e.printStackTrace();
+			 }
+	}
+}

@@ -1,0 +1,21 @@
+package com.enterprisesim.view;
+import javax.swing.JButton;
+import com.enterprisesim.view.GUIView;
+
+public class ButtonWithExtras extends JButton{
+	private GUIView guiViewParent;
+	
+	public ButtonWithExtras() {
+		super();
+	}
+    public ButtonWithExtras(String text) {
+		super(text);
+	}
+	public GUIView getButtonParent() {
+		return this.guiViewParent;
+	}
+	public void setBtnParent(GUIView guiView) {
+		this.guiViewParent = guiView;
+	}
+	
+}

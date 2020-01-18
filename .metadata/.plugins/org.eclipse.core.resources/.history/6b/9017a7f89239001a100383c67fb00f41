@@ -1,0 +1,48 @@
+package com.enterprisesim.model;
+
+import java.util.Scanner;
+
+import com.enterprisesim.model.BookData;
+
+public class Inventory{
+	int size;
+	BookData allBooks[];
+	//private ArrayList<BookData> allBooks;
+	public Inventory(int size) {
+	//	this.size = size;
+		allBooks = new BookData[size];
+	//	this.allBooks = new ArrayList<BookData>(size);
+		for (int i = 0; i < size; i ++) {
+			allBooks[i] = new BookData();
+		}
+	}
+	BookData isInInventory(String bookID) {
+		for (int i = 0; i < this.size; i++) {
+			if (this.allBooks[i].bookID == bookID) {
+				return this.allBooks[i];
+			}
+		}
+		return null;
+	}
+	public Inventory getInventory(String myData) {
+		Scanner myScanner = new Scanner(myData);
+		int currentDataIndex = 0;
+
+	   String[] tempArray = myData.split(",");
+	   for (int i = 0; i < this.size; i ++) {
+
+		   this.allBooks[0].bookID = "thing";
+		   this.allBooks[currentDataIndex].bookID = tempArray[0].strip(); // runtime error
+		   this.allBooks[currentDataIndex].bookTitleAndAuth = tempArray[1].strip();
+//		   this.allBooks[currentDataIndex].bookPrice = tempArray[2];////////////////////////need to fix this part!!!
+		   
+		   currentDataIndex++;
+	   }
+		
+	   
+	  System.out.printf("Testing third item" + this.allBooks[2].bookID +
+			" " + this.allBooks[2].bookTitleAndAuth + " " + this.allBooks[2].bookPrice);
+		return this;
+	}
+	
+}

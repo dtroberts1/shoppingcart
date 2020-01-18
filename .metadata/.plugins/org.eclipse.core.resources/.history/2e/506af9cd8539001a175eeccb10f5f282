@@ -1,0 +1,5 @@
+package com.enterprisesim.model;
+
+public interface Updater {
+
+}

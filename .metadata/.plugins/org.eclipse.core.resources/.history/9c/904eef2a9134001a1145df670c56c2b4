@@ -1,0 +1,28 @@
+package com.enterprisesim;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.util.Scanner;
+
+import com.enterprisesim.view.GUIView;
+
+//import com.enterprisesim.listener.MyActionListener;
+
+
+public class Application {
+	
+
+	public static void main(String[] args){
+		String path = new File("inventory.txt").getAbsolutePath();
+		System.out.println(path);
+
+
+		File myFile = new File("src/inventory.txt");
+		Scanner myScanner = new Scanner(path);
+		System.out.println(myScanner.nextLine());
+	//	GUIView myGUIView = new GUIView();
+
+	}
+
+}

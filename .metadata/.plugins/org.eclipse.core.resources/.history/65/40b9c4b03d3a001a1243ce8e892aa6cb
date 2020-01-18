@@ -1,0 +1,56 @@
+package com.enterprisesim.model;
+
+import java.util.Scanner;
+import com.enterprisesim.model.BookData;
+
+/*  Name:  Dylan Roberts
+ * Course: CNT 4714 – Spring 2020      
+ * Assignment title: Project 1 – Event-driven Enterprise Simulation      
+ * Date: Saturday January 18, 2020 
+*/
+public class Inventory{
+	public int size;
+	BookData allBooks[];
+	//private ArrayList<BookData> allBooks;
+	public Inventory(int size) {
+		this.size = size;
+		allBooks = new BookData[size];
+	//	this.allBooks = new ArrayList<BookData>(size);
+		for (int i = 0; i < size; i ++) {
+			allBooks[i] = new BookData();
+		}
+	}
+	public BookData[] getAllBooks() {
+		return this.allBooks;
+	}
+	public BookData isInInventory(String bookID, int currentItemNbr, boolean canDisplayConf) {
+		System.out.print("first element is >>>> " + this.allBooks[0].bookID + " <<<<<<");
+
+		for (int i = 0; i < this.size; i++) {
+			if (this.allBooks[i].bookID.equals(bookID)) {
+				if (canDisplayConf)
+					javax.swing.JOptionPane.showMessageDialog(null, "Item #" + currentItemNbr + " accepted");
+				return this.allBooks[i];
+			}
+		}
+		javax.swing.JOptionPane.showMessageDialog(null, "Book " + bookID + " not in file");
+		return null;
+	}
+	public Inventory setInventory(String myData) {
+		Scanner myScanner = new Scanner(myData);
+		int currentDataIndex = 0;
+	   String[] tempArray = myData.split(",");
+	   for (int i = 0; i < this.size; i ++) {
+		   System.out.print("iteration: " + currentDataIndex);
+		   this.allBooks[i].bookID = tempArray[currentDataIndex++].strip(); // runtime error
+		   this.allBooks[i].bookTitleAndAuth = tempArray[currentDataIndex++].strip();
+		   this.allBooks[i].bookPrice = Double.parseDouble(tempArray[currentDataIndex++]);////////////////////////need to fix this part!!!
+		  }
+		
+	   
+	  System.out.printf("Testing third item" + this.allBooks[2].bookID +
+			" " + this.allBooks[2].bookTitleAndAuth + " " + this.allBooks[2].bookPrice);
+		return this;
+	}
+	
+}

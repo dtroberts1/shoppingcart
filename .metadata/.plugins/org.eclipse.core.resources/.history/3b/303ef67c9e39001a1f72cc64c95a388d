@@ -1,0 +1,54 @@
+package com.enterprisesim.model;
+
+import java.util.Scanner;
+
+import com.enterprisesim.model.BookData;
+
+public class Inventory{
+	public int size;
+	BookData allBooks[];
+	//private ArrayList<BookData> allBooks;
+	public Inventory(int size) {
+		this.size = size;
+		allBooks = new BookData[size];
+	//	this.allBooks = new ArrayList<BookData>(size);
+		for (int i = 0; i < size; i ++) {
+			allBooks[i] = new BookData();
+		}
+	}
+	public BookData[] getAllBooks() {
+		return this.allBooks;
+	}
+	public BookData isInInventory(String bookID) {
+		//System.out.print("inventory looks like the following >>>> " + this.allBooks. + " <<<<<<");
+		System.out.print("first element is >>>> " + this.allBooks[0].bookID + " <<<<<<");
+
+		for (int i = 0; i < this.size; i++) {
+			System.out.print("checking $$$ " + i + "$$$");
+			if (this.allBooks[i].bookID.equals(bookID)) {
+				return this.allBooks[i];
+			}
+		}
+		javax.swing.JOptionPane.showMessageDialog(null, "Book " + bookID + " not in file");
+		return null;
+	}
+	public Inventory setInventory(String myData) {
+		Scanner myScanner = new Scanner(myData);
+		   System.out.print("size is ***: " + this.size);
+	   String[] tempArray = myData.split(",");
+	   for (int currentDataIndex = 0; currentDataIndex < this.size; currentDataIndex ++) {
+		   System.out.print("iteration: " + currentDataIndex);
+		   this.allBooks[currentDataIndex].bookID = tempArray[0].strip(); // runtime error
+		   this.allBooks[currentDataIndex].bookTitleAndAuth = tempArray[1].strip();
+//		   this.allBooks[currentDataIndex].bookPrice = tempArray[2];////////////////////////need to fix this part!!!
+		   
+		   currentDataIndex++;
+	   }
+		
+	   
+	  System.out.printf("Testing third item" + this.allBooks[2].bookID +
+			" " + this.allBooks[2].bookTitleAndAuth + " " + this.allBooks[2].bookPrice);
+		return this;
+	}
+	
+}

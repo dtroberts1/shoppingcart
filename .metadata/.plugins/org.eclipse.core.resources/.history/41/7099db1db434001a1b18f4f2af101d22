@@ -1,0 +1,89 @@
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Scanner;
+
+import com.enterprisesim.view.GUIView;
+
+public class Application {
+	
+	public static class BookData{
+		public String bookID;
+		public String bookTitleAndAuth;
+		public String bookPrice;
+	}
+	
+	public static class Inventory{
+		int size;
+		BookData allBooks[];
+		//private ArrayList<BookData> allBooks;
+		public Inventory(int size) {
+		//	this.size = size;
+			allBooks = new BookData[size];
+		//	this.allBooks = new ArrayList<BookData>(size);
+			for (int i = 0; i < size; i ++) {
+				allBooks[i] = new BookData();
+			}
+		}
+	}
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		 File file = new File("src/inventory.txt");
+		 String allInventoryData = "";
+		 int nbrLines = 0;
+		 
+		 try (Scanner scanner = new Scanner(file)){
+			   while (scanner.hasNextLine()) {
+				   allInventoryData += scanner.nextLine();
+				   nbrLines++;
+			   }
+			  System.out.print("Number of lines is " + nbrLines);
+			  Inventory myInventory = getInventory(allInventoryData, nbrLines);
+			  
+			//  GUIView myGui = new GUIView();
+
+		 }
+			 catch (FileNotFoundException e) {
+				 System.out.println("can't find file " + file.toString());
+			 }
+			 catch (IOException e) {
+				 e.printStackTrace();
+			 }
+	}
+	public static Inventory getInventory(String myData, int nbrLines) {
+		Inventory myInventory = new Inventory(nbrLines);
+	//	myInventory.allBooks = new BookData[nbrLines]; 
+		Scanner myScanner = new Scanner(myData);
+	//	String[] tempArray = new String[4];
+		int currentDataIndex = 0;
+
+	   String[] tempArray = myData.split(",");
+	   for (int i = 0; i < 3; i ++) {
+		  // myInventory.allBooks[0].bookID = "thing";
+
+		  // myInventory.allBooks.get(0).bookID = "thing";
+		   
+		   myInventory.allBooks[0].bookID = "thing";
+		   myInventory.allBooks[currentDataIndex].bookID = tempArray[0]; // runtime error
+		   myInventory.allBooks[currentDataIndex].bookTitleAndAuth = tempArray[1];
+		   myInventory.allBooks[currentDataIndex].bookPrice = tempArray[2];
+		   
+		   currentDataIndex++;
+	   }
+		
+	   
+	  System.out.printf("Testing third item" + myInventory.allBooks[2].bookID +
+			" " + myInventory.allBooks[2].bookTitleAndAuth + " " + myInventory.allBooks[2].bookPrice);
+		return myInventory;
+	}
+}

@@ -1,0 +1,84 @@
+package com.enterprisesim.model;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Date;
+
+import com.enterprisesim.model.BookData; 
+import com.enterprisesim.view.GUIView.TransactionItem;
+
+public class Order{
+	int size;
+	int nbrOrderItems;
+	double orderSubtotal;
+	final double taxRate = .06;
+	double taxAmount;
+	double orderTotal;
+
+	
+	String transactionDate;
+	TransactionItem allTransactions[];
+	//private ArrayList<BookData> allBooks;
+	public Order(int nbrOrderItems) {
+		this.size = 0;
+		this.orderSubtotal = 0.00;
+		this.allTransactions = new TransactionItem[nbrOrderItems];
+	}
+	
+	double getOrderSubtotal() {
+		return this.orderSubtotal;
+	}
+	public TransactionItem[] getTransactions() {
+		return this.allTransactions;
+	}
+
+	public void addItem(BookData bookData, int quantity) {
+		int itemIndex = this.size++;
+		this.allTransactions[itemIndex] = new TransactionItem();
+		this.allTransactions[itemIndex].bookID = bookData.bookID;
+		this.allTransactions[itemIndex].bookTitleAndAuth = bookData.bookTitleAndAuth;
+		this.allTransactions[itemIndex].bookPrice = bookData.bookPrice;
+		this.allTransactions[itemIndex].qty = quantity;
+		this.allTransactions[itemIndex].discountPercent = MyModel.getDiscount(quantity);
+		//this.allTransactions[itemIndex].info = bookTitleAndAuth;
+		this.allTransactions[itemIndex].subTotal = (quantity * bookData.bookPrice) - ((quantity * bookData.bookPrice) * (this.allTransactions[itemIndex].discountPercent / 100));
+		this.orderSubtotal += this.allTransactions[itemIndex].subTotal;////////////////////////////////;fill this out/////////////////////////
+	}
+	public void printoutOrder() {
+		File outFile = new File("src/resources/transactions.txt");
+		FileWriter fileWriter;
+		try {
+			outFile.createNewFile();
+			fileWriter = new FileWriter(outFile);
+			String outStr = "";
+			for (int i = 0; i < size; i++) {
+				String []myStrArray = new String[3];
+				myStrArray = java.time.LocalDate.now().toString().split("-");
+				System.out.println(myStrArray[2]); // Day
+				System.out.println(myStrArray[1]); // Month
+				System.out.println(myStrArray[0]); // Year
+				
+				
+				outStr += myStrArray[2] + myStrArray[1]+ myStrArray[0]; // Date of Transaction
+				outStr += this.allTransactions[i].bookID + ", ";
+				outStr += this.allTransactions[i].bookTitleAndAuth + ", ";
+				outStr += "$" + String.format("%.2f", this.allTransactions[i].bookPrice) + ", ";
+				outStr += this.allTransactions[i].qty + ", ";
+				outStr += (this.allTransactions[i].discountPercent / 100) + ", ";
+				outStr += "$" + String.format("%.2f", this.allTransactions[i].subTotal) + ", ";
+				outStr += " " + java.time.LocalTime.now() + "EST";
+
+			}
+		//	fileWriter.append("TestingOutFile");
+			
+			fileWriter.close();
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+
+	}
+}

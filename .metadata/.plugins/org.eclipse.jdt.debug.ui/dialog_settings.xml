@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="expressionHistory">
+	</section>
+	<section name="org.eclipse.jdt.internal.debug.ui.ExpressionInformationControlCreator$ExpressionInformationControl">
+		<item key="WIDTH" value="1127"/>
+		<item key="HEIGHT" value="403"/>
+		<item key="SashWeightTree" value="500"/>
+		<item key="SashWeightDetails" value="500"/>
+	</section>
+	<section name="conditionHistory">
+		<item key="conditionHistoryEntry_0" value="currentDataIndex == 31"/>
+		<item key="conditionHistoryEntryCount" value="3"/>
+		<item key="conditionHistoryEntry_1" value="currentDataIndex.equals(31)"/>
+		<item key="conditionHistoryEntry_2" value="currentDatIndex.equals(31)&#x0D;&#x0A;&#x09;&#x09;"/>
+	</section>
+</section>

@@ -1,0 +1,8 @@
+package com.enterprisesim.model;
+
+public class BookData{
+	public String bookID;
+	public String bookTitleAndAuth;
+	public double bookPrice;
+	
+}

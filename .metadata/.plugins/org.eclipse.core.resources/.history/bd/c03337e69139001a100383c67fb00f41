@@ -1,0 +1,40 @@
+package com.enterprisesim.model;
+
+import java.util.Scanner;
+
+import com.enterprisesim.model.BookData;
+
+public class Inventory{
+	int size;
+	BookData allBooks[];
+	//private ArrayList<BookData> allBooks;
+	public Inventory(int size) {
+	//	this.size = size;
+		allBooks = new BookData[size];
+	//	this.allBooks = new ArrayList<BookData>(size);
+		for (int i = 0; i < size; i ++) {
+			allBooks[i] = new BookData();
+		}
+	}
+	public Inventory getInventory(String myData, int nbrLines) {
+		Inventory myInventory = new Inventory(nbrLines);
+		Scanner myScanner = new Scanner(myData);
+		int currentDataIndex = 0;
+
+	   String[] tempArray = myData.split(",");
+	   for (int i = 0; i < 3; i ++) {
+
+		   myInventory.allBooks[0].bookID = "thing";
+		   myInventory.allBooks[currentDataIndex].bookID = tempArray[0].strip(); // runtime error
+		   myInventory.allBooks[currentDataIndex].bookTitleAndAuth = tempArray[1].strip();
+		   myInventory.allBooks[currentDataIndex].bookPrice = tempArray[2].strip();
+		   
+		   currentDataIndex++;
+	   }
+		
+	   
+	  System.out.printf("Testing third item" + myInventory.allBooks[2].bookID +
+			" " + myInventory.allBooks[2].bookTitleAndAuth + " " + myInventory.allBooks[2].bookPrice);
+		return myInventory;
+	}
+}
