@@ -23,34 +23,34 @@ public class MyListeners implements ActionListener {
 
 			System.out.print("Type is correct. view is " + guiView.toString());
 		
-		if(conditionString.equals("Confirm Item #"))
-		{	
-			guiView.update();
-		}	
-		else if(conditionString.equals("Process Item #"))
-		{			
-			guiView.update();
-		}	
-		else if(conditionString.equals("View Order"))
-		{			
-			guiView.viewOrder();
+			if(conditionString.equals("Confirm Item #"))
+			{	
+				guiView.update();
+			}	
+			else if(conditionString.equals("Process Item #"))
+			{			
+				guiView.update();
+			}	
+			else if(conditionString.equals("View Order"))
+			{			
+				guiView.getOrder().viewOrder(guiView.getModel());
+			}
+			else if(conditionString.equals("New Order"))
+			{			
+				guiView.reset();
+			}	
+			else if(conditionString.equals("Finish Order"))
+			{	
+				guiView.getOrder().displayFinalPrompt();
+				guiView.getOrder().printoutOrder();
+				guiView.closeWindow();
+	
+			}		
+			else if(conditionString.equals("Exit"))
+			{			
+				guiView.closeWindow();
+			}	
 		}
-		else if(conditionString.equals("New Order"))
-		{			
-			guiView.reset();
-		}	
-		else if(conditionString.equals("Finish Order"))
-		{	
-			guiView.getOrder().displayFinalPrompt();
-			guiView.getOrder().printoutOrder();
-			guiView.closeWindow();
-
-		}		
-		else if(conditionString.equals("Exit"))
-		{			
-			guiView.closeWindow();
-		}	
-	}
 	}
 
 	

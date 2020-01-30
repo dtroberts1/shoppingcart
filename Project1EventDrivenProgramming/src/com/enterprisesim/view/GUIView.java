@@ -36,11 +36,11 @@ public class GUIView implements Updater{
 	ButtonWithExtras newOrderBtn = new ButtonWithExtras();
 	ButtonWithExtras exitBtn = new ButtonWithExtras();
 	
-	private JLabel nbrItemsLabel;
-	private JLabel bookIDLabel ;
-	private JLabel qtyLabel;
-	private JLabel itemInfoLabel;
-	private JLabel itemSubtotalLabel;
+	public JLabel nbrItemsLabel;
+	public JLabel bookIDLabel ;
+	public JLabel qtyLabel;
+	public JLabel itemInfoLabel;
+	public JLabel itemSubtotalLabel;
 	Inventory myInventory;
 	
 	public static JTextField nbrItemsTxt;
@@ -61,21 +61,6 @@ public class GUIView implements Updater{
     }
     public void closeWindow() {
     	this.myFrame.setVisible(false);
-    }
-    
-    public void viewOrder() {
-    	String outMessage = "";
-    	for (int i = 0; i < model.maxItems; i++) {
-    		outMessage += (i + 1) + ". ";
-    		outMessage += order.getTransactions()[i].bookID + " ";
-    		outMessage += order.getTransactions()[i].bookTitleAndAuth + " ";
-    		outMessage += "$" + String.format("%.2f", order.getTransactions()[i].bookPrice) + " ";
-    		outMessage += order.getTransactions()[i].qty + " ";
-    		outMessage += (int)order.getTransactions()[i].discountPercent + "% ";
-    		outMessage += "$" + String.format("%.2f", order.getTransactions()[i].subTotal);
-    		outMessage += "\n";
-    	}
-		javax.swing.JOptionPane.showMessageDialog(null, outMessage);
     }
     
     public int getBookQty() {
@@ -102,13 +87,36 @@ public class GUIView implements Updater{
 		model = new MyModel();
 		model.isProcessed = true;
 		currentBookData = new BookData();
-		initializeGUI(model);
+		initializeGUI(model, false);
 		this.myInventory = myInventory;
 	}
+	public static MyModel getModel() {
+		return model;
+	}
 	public void reset() {
+		this.order = null;
 		this.model = new MyModel();
 		currentItemNbr = 1;
 		this.model.maxItems = 0;
+		processBtn.setText("Process Item #" + this.currentItemNbr);
+		confirmBtn.setText("Confirm Item #" + this.currentItemNbr);
+		bookIDLabel.setText("Enter Book ID for Item #" + this.currentItemNbr + ": ");
+		qtyLabel.setText("Enter Quantity for Item #" + this.currentItemNbr + ": ");
+
+		bookIDTxt.setText("");
+		bookIDTxt.repaint();
+		qtyTxt.setText("");
+		qtyTxt.repaint();
+		nbrItemsTxt.setEnabled(true);
+		nbrItemsTxt.setText("");
+		nbrItemsTxt.repaint();
+		itemsInfoTxt.setEnabled(false);
+		itemsInfoTxt.setText("");
+		itemsInfoTxt.repaint();
+		itemSubtotalTxt.setEnabled(false);
+		itemSubtotalTxt.setText("");
+		itemSubtotalTxt.repaint();
+
 		this.model.isProcessed = true;
 		this.processBtn.setEnabled(true);
 		this.confirmBtn.setEnabled(false);
@@ -116,23 +124,23 @@ public class GUIView implements Updater{
 		this.finishOrderBtn.setEnabled(false);
 		this.currentBookData = new BookData();
 		this.order = null;
-		initializeGUI(this.model);
+		//initializeGUI(this.model, true);
+		this.myFrame.invalidate();
+		this.myFrame.repaint();
 	}
 	
 	@Override
 	public void update() {
 		String itemInfoStr = "";
-		model.setNbrItems(nbrItemsTxt);
 
+		System.out.print("val of nbrItemsTxt is " + nbrItemsTxt.getText());
+		model.setNbrItems(nbrItemsTxt);
+		System.out.print("Outside, max items is " + model.maxItems);
 		if (this.currentItemNbr <= model.maxItems)
 		{
-			if (model.isProcessed == true)
+			System.out.print("less than max items");
+			if (model.isProcessed)
 			{
-				// If new item is processed
-				System.out.println("New Item is processed.");
-				processBtn.setEnabled(false);
-				confirmBtn.setEnabled(true);
-				model.isProcessed = false;
 				if (this.currentItemNbr == 1) {
 					System.out.print("now creating order, (Max items is " + model.maxItems);
 					this.order = new Order(model.maxItems);
@@ -142,6 +150,13 @@ public class GUIView implements Updater{
 				}
 				// Add Data to populate last 2 rows
 				BookData currentBookData = this.myInventory.isInInventory(this.getBookIDTxt(), this.currentItemNbr, false);
+				if (currentBookData != null) {
+					model.isProcessed = false;
+
+					// If new item is processed
+					System.out.println("New Item is processed.");
+					processBtn.setEnabled(false);
+					confirmBtn.setEnabled(true);
 				itemInfoStr += currentBookData.bookID + " " + currentBookData.bookTitleAndAuth + " ";
 				itemInfoStr += "$" + currentBookData.bookPrice + " ";
 				itemInfoStr += String.format("%d", this.getQty()) + " ";
@@ -154,6 +169,10 @@ public class GUIView implements Updater{
 				nbrItemsTxt.setEnabled(false);
 				itemsInfoTxt.setEnabled(false);
 				itemSubtotalTxt.setEnabled(false);
+				}
+				else {
+					
+				}
 			}
 			// If new item is confirmed
 			else if (model.isProcessed == false) {
@@ -201,14 +220,15 @@ public class GUIView implements Updater{
 			System.out.println("Max Count: " + model.maxItems);
 			System.out.println("isProcessed: " + model.isProcessed);
 		}
-		System.out.println("refreshing..");
+		System.out.println("updating..");
 	}
     
-    public void initializeGUI(MyModel model) {
+    public void initializeGUI(MyModel model, boolean reset) {
 		// Frame
-		myFrame = new JFrame();
-		myFrame.setBounds(420, 120, 750, 500);
-		myFrame.setLocationRelativeTo(null);
+    	if (!reset)
+    		myFrame = new JFrame();
+		myFrame.setBounds(420, 120, 770, 200);
+	//	myFrame.setLocationRelativeTo(null);
 		
 		MyListeners myListener = new MyListeners();
 		processBtn = new ButtonWithExtras("Process Item #" + this.currentItemNbr);
@@ -224,7 +244,7 @@ public class GUIView implements Updater{
 		viewOrderBtn = new ButtonWithExtras("View Order");
 		viewOrderBtn.addActionListener(myListener);
 		viewOrderBtn.setBtnParent(this);
-		viewOrderBtn.addActionListener(myListener);
+		//viewOrderBtn.addActionListener(myListener);
 
 		viewOrderBtn.setEnabled(false);
 		finishOrderBtn = new ButtonWithExtras("Finish Order");

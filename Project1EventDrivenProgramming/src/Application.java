@@ -4,7 +4,7 @@
  * Date: Saturday January 18, 2020 
 */
 
-import java.io.File;
+import java.io.File; 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
@@ -48,7 +48,7 @@ public class Application {
 			  System.out.print("allInventoryData is " + allInventoryData);
 			  myInventory.setInventory(allInventoryData);
 
-			  GUIView myGui = new GUIView(myInventory);
+			  new GUIView(myInventory);
 			  scanner.close();
 		 }
 			 catch (FileNotFoundException e) {

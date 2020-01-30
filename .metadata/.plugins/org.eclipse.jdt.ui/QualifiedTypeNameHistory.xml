@@ -38,4 +38,10 @@
     <fullyQualifiedTypeName name="com.enterprisesim.model.Inventory"/>
     <fullyQualifiedTypeName name="java.io.BufferedWriter"/>
     <fullyQualifiedTypeName name="java.io.FileWriter"/>
+    <fullyQualifiedTypeName name="java.util.Date"/>
+    <fullyQualifiedTypeName name="java.util.Calendar"/>
+    <fullyQualifiedTypeName name="java.time.LocalDate"/>
+    <fullyQualifiedTypeName name="java.time.LocalTime"/>
+    <fullyQualifiedTypeName name="java.text.SimpleDateFormat"/>
+    <fullyQualifiedTypeName name="java.text.DateFormat"/>
 </qualifiedTypeNameHistroy>

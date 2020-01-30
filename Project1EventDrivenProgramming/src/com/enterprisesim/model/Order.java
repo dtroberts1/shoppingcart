@@ -6,7 +6,7 @@ package com.enterprisesim.model;
  * Date: Saturday January 18, 2020 
 */
 
-import java.io.File;
+import java.io.File; 
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.DateFormat;
@@ -22,6 +22,7 @@ public class Order{
 	double orderSubtotal;
 	final double taxRate = .06;
 	double orderTotal;
+	public static MyModel model;
 
 	
 	String transactionDate;
@@ -32,7 +33,9 @@ public class Order{
 		this.orderSubtotal = 0.00;
 		this.allTransactions = new TransactionItem[nbrOrderItems];
 	}
-	
+	public void clearOrder() {
+		
+	}
 	public double getOrderSubtotal() {
 		return this.orderSubtotal;
 	}
@@ -118,7 +121,19 @@ public class Order{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-
 	}
+    public void viewOrder(MyModel model) {
+    	String outMessage = "";
+    	for (int i = 0; i < model.maxItems; i++) {
+    		outMessage += (i + 1) + ". ";
+    		outMessage += this.getTransactions()[i].bookID + " ";
+    		outMessage += this.getTransactions()[i].bookTitleAndAuth + " ";
+    		outMessage += "$" + String.format("%.2f", this.getTransactions()[i].bookPrice) + " ";
+    		outMessage += this.getTransactions()[i].qty + " ";
+    		outMessage += (int)this.getTransactions()[i].discountPercent + "% ";
+    		outMessage += "$" + String.format("%.2f", this.getTransactions()[i].subTotal);
+    		outMessage += "\n";
+    	}
+		javax.swing.JOptionPane.showMessageDialog(null, outMessage);
+    }
 }

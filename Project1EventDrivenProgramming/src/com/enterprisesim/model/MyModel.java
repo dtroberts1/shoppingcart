@@ -37,8 +37,11 @@ public class MyModel {
 	}
 
     public void setNbrItems(JTextField nbrItemsTxt) {
+    	System.out.printf("***setting nbrItems()");
     	if (nbrItemsTxt.getText().equals(""))
+    	{
     		maxItems = 0;
+    	}
     	else
     		maxItems = Integer.parseInt(nbrItemsTxt.getText());
     	System.out.println("Max items is now " + maxItems);

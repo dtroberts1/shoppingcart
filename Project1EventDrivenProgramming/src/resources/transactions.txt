@@ -9,3 +9,8 @@
 180120201738, 234, "The Bourne Identity - Robert Ludlum", 12.95, 1, 0.0, $12.95, 1/18/2020, 05:38:40 PM EST
 180120201738, 12123, "X - Sue Grafton", 9.99, 8, 0.1, $71.93, 1/18/2020, 05:38:40 PM EST
 180120201738, 88888, "Terminal City - Linda Fairstein", 10.95, 1, 0.0, $10.95, 1/18/2020, 05:38:40 PM EST
+290120202004, 23456, "14th Deadly Sin - James Patterson", 14.95, 3, 0.0, $44.85, 1/29/2020, 08:04:12 PM EST
+290120202004, 23456, "14th Deadly Sin - James Patterson", 14.95, 3, 0.0, $44.85, 1/29/2020, 08:04:12 PM EST
+290120202008, 234, "The Bourne Identity - Robert Ludlum", 12.95, 1, 0.0, $12.95, 1/29/2020, 08:08:16 PM EST
+290120202008, 12123, "X - Sue Grafton", 9.99, 8, 0.1, $71.93, 1/29/2020, 08:08:16 PM EST
+290120202008, 88888, "Terminal City - Linda Fairstein", 10.95, 1, 0.0, $10.95, 1/29/2020, 08:08:16 PM EST
